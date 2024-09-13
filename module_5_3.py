@@ -1,15 +1,18 @@
 class House:
 
     
-    def __init__(self, name: str, number_of_floors: int) -> None:
-        self.name = name
-        self.number_of_floors = number_of_floors
+    def __init__(self, name: str, number_of_floors: int):
+        if isinstance(name, str):
+            self.name = name
+        if isinstance(number_of_floors, int):
+            self.number_of_floors = number_of_floors
 
     def go_to(self, new_floor):
-        if new_floor < 1 or new_floor > self.number_of_floors:
-            print('Такого этажа не существует')
-        else:
-            return [print(i) for i in range(1, new_floor + 1)]
+        if isinstance(new_floor, int):
+            if new_floor < 1 or new_floor > self.number_of_floors:
+                print('Такого этажа не существует')
+            else:
+                return [print(i) for i in range(1, new_floor + 1)]
         
     def __len__(self):
         return self.number_of_floors
@@ -41,9 +44,10 @@ class House:
         if isinstance(other, House):
             return self.number_of_floors != other.number_of_floors
     
-    def __add__(self, value: int):
-        self.number_of_floors = self.number_of_floors + value
-        return self
+    def __add__(self, value):
+        if isinstance(value, int):
+            self.number_of_floors = self.number_of_floors + value
+            return self
     
     def __radd__(self, value: int):
         return self.__add__(value=value)
@@ -75,4 +79,4 @@ print(h1 > h2) # __gt__
 print(h1 >= h2) # __ge__
 print(h1 < h2) # __lt__
 print(h1 <= h2) # __le__
-print(h1 != h2) # __ne__    
+print(h1 != h2) # __ne__
