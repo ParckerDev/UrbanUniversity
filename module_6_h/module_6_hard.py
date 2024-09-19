@@ -7,7 +7,7 @@ class Circle(Figure):
 
     def __init__(self, color, *sides, filled=True):
         super().__init__(sides, color, filled)
-        self.__radius = self.__len__()/(2*pi)
+        self.__radius = round(self.__len__()/(2*pi), 2)
 
     def get_square(self):
         return self.__radius**2 * pi
@@ -24,5 +24,13 @@ class Cube(Figure):
 
 
 
-c1 = Circle([165], [255, 4, 78])
-print(c1.get_color())
+# TESTS
+
+circle1 = Circle((255, 252, 45), 35)
+print(circle1.__dict__)
+print(circle1.get_color())
+circle1.set_color(54, 64, 30)
+print(circle1.get_color())
+print(circle1.get_sides())
+circle1.set_sides(15) # Изменится
+print(circle1.get_sides())
