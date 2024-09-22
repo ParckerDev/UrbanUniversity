@@ -39,5 +39,5 @@ class Figure:
         return sum_
     
     def set_sides(self, *args):
-        if self.__is_valid_sides(args):
+        if self.__is_valid_sides(*args):
             self.__sides = list(args)
