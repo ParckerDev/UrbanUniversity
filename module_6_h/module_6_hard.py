@@ -5,18 +5,22 @@ from math import pi
 class Circle(Figure):
     sides_count = 1
 
-    def __init__(self, color, *sides, filled=True):
-        super().__init__(sides, color, filled)
+    def __init__(self, color, *sides):
+        super().__init__(color, *sides)
         self.__radius = round(self.__len__()/(2*pi), 2)
 
     def get_square(self):
         return self.__radius**2 * pi
 
 
-
-
 class Triangle(Figure):
-    pass
+    sides_count = 3
+
+    def get_square(self):
+        p = 0.5*(len(self))
+        a, b, c = self.get_sides()
+        square = p*(p-a)*(p-b)*(p-c)
+        return square
 
 
 class Cube(Figure):
@@ -25,12 +29,13 @@ class Cube(Figure):
 
 
 # TESTS
-
-circle1 = Circle((255, 252, 45), 35)
+# Circle
+circle1 = Circle((255, 252, 46), 45)
 print(circle1.__dict__)
-print(circle1.get_color())
-circle1.set_color(54, 64, 30)
-print(circle1.get_color())
 print(circle1.get_sides())
-circle1.set_sides(15) # Изменится
-print(circle1.get_sides())
+
+print()
+# Triangle
+triangle = Triangle((35, 56, 100), 10, 20, 30)
+print(triangle.get_sides())
+print(triangle.get_square())
