@@ -24,18 +24,40 @@ class Triangle(Figure):
 
 
 class Cube(Figure):
-    pass
+    sides_count = 12
+    # закомментировал потомучто реализовал создание сторон через родительский класс
+    # Но жду от Вас комментариев!
+    '''def __init__(self, color, *sides):
+        if len(sides) != 1:
+            self.__sides = [1 for _ in range(12)]
+        else:
+            side = int(*sides)
+            self.__sides = [side for _ in range(12)]
+            super().__init__(color, side)'''
+    
+    def get_volume(self):
+        return self.get_sides()[0]**3
 
 
 
-# TESTS
-# Circle
-circle1 = Circle((255, 252, 46), 45)
-print(circle1.__dict__)
+# lesson tests
+circle1 = Circle((200, 200, 100), 10) # (Цвет, стороны)
+cube1 = Cube((222, 35, 230), 6)  # type: ignore
+
+# Проверка на изменение цветов:
+circle1.set_color(55, 66, 77) # Изменится
+print(circle1.get_color())
+cube1.set_color(300, 70, 15) # Не изменится
+print(cube1.get_color())
+
+# Проверка на изменение сторон:
+cube1.set_sides(5, 3, 12, 4, 5) # Не изменится
+print(cube1.get_sides())
+circle1.set_sides(15) # Изменится
 print(circle1.get_sides())
 
-print()
-# Triangle
-triangle = Triangle((35, 56, 100), 10, 20, 30)
-print(triangle.get_sides())
-print(triangle.get_square())
+# Проверка периметра (круга), это и есть длина:
+print(len(circle1))
+
+# Проверка объёма (куба):
+print(cube1.get_volume())
