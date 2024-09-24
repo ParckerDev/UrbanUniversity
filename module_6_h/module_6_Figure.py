@@ -17,7 +17,12 @@ class Figure:
             self.__sides = [int(*sides) for _ in range(self.sides_count)]
         else:
             self.__sides = [1 for _ in range(self.sides_count)]
-        self.__color = list(color)
+        # Проверка цвета на валидность. Если не валиден, то передается служебный цвет
+        if self.__is_valid_color(*color):
+            self.__color = list(color)
+        else:
+            print('Введёные параметры цвета не корректны!\nПрименён служебный цвет, равный (144, 238, 144)!!!')
+            self.__color = [144, 238, 144]
         self.filled = filled
 
     @staticmethod
@@ -34,9 +39,9 @@ class Figure:
         if len(rgb) == 3:
             for num in rgb:
                 if (0 > num or num > 255) or not isinstance(num, int):
-                    print('wrong color digits')
+                    #print('wrong color digits')
                     return False
-            print('True color')
+            #print('True color')
             return True
     
     def set_color(self, r, g, b):

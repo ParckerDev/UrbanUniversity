@@ -42,7 +42,7 @@ class Cube(Figure):
 
 # lesson tests
 circle1 = Circle((200, 200, 100), 10) # (Цвет, стороны)
-cube1 = Cube((222, 35, 130), 6)  # type: ignore
+cube1 = Cube((222, 35, 230), 6)  # type: ignore
 
 # Проверка на изменение цветов:
 circle1.set_color(55, 66, 77) # Изменится
