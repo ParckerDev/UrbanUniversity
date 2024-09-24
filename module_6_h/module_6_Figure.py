@@ -1,20 +1,22 @@
 
 class Figure:
-    # Doc string
+# Doc string
     sides_count = 0
     def __init__(self, color: tuple[int], *sides, filled: bool = True):
         # проверяем количество переданных сторон
-        if len(sides) != self.sides_count: # если сторон не столько же, чему равно количесво сторон в классе, то
-            self.__sides = [1 for _ in range(self.sides_count)] # стороны будут равняться 1 каждая.
-        else: # если количество сторон совпадает
-            if self.sides_count == 3: # проверяем могут ли заданные стороны быть сторонами треугольника
-                if self.is_triangle(sides):
-                    self.__sides = list(sides) # если могут, то присваиваем их в sides
-                else:
-                    print('Введённые стороны не могут быть сторонами треугольника!\nПриняты служебные размеры сторон равные "1"!!!')
-                    self.__sides = [1, 1, 1] # если не могут, то стороны будут равны 1
-            if self.sides_count == 1:
-                self.__sides = list(sides)
+        if self.sides_count == 3 and len(sides) == self.sides_count: # проверяем могут ли заданные стороны быть сторонами треугольника
+            if self.is_triangle(sides):
+                self.__sides = list(sides) # если могут, то присваиваем их в sides
+            else:
+                print('Введённые стороны не могут быть сторонами треугольника!\nПриняты служебные размеры сторон равные "1"!!!')
+                self.__sides = [1, 1, 1] # если не могут, то стороны будут равны 1
+            
+        elif self.sides_count == 1 and len(sides) == self.sides_count:
+            self.__sides = list(sides)
+        elif self.sides_count == 12 and len(sides) == 1:
+            self.__sides = [int(*sides) for _ in range(self.sides_count)]
+        else:
+            self.__sides = [1 for _ in range(self.sides_count)]
         self.__color = list(color)
         self.filled = filled
 
