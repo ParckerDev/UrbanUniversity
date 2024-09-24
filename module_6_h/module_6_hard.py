@@ -24,7 +24,16 @@ class Triangle(Figure):
 
 
 class Cube(Figure):
-    pass
+    sides_count = 12
+
+    def __init__(self, color, *sides):
+        if len(sides) != 1:
+            self.__sides = [1 for _ in range(12)]
+        else:
+            side = int(*sides)
+            self.__sides = [side for _ in range(12)]
+            super().__init__(color, side)
+        
 
 
 
@@ -39,3 +48,9 @@ print()
 # Triangle
 triangle = Triangle((45, 7, 99), 5, 10, 20) # type: ignore
 print(triangle.__dict__)
+
+# CUBE
+cube = Cube((56, 150, 240), 25)
+print(cube.__dict__)
+print(cube.get_color())
+print(cube.get_sides())
