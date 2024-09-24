@@ -30,12 +30,12 @@ class Cube(Figure):
 
 # TESTS
 # Circle
-circle1 = Circle((255, 252, 46), 45)
+circle1 = Circle((255, 252, 46), 25)
 print(circle1.__dict__)
 print(circle1.get_sides())
-
+print(len(circle1))
 print()
+
 # Triangle
-triangle = Triangle((35, 56, 100), 10, 20, 30)
-print(triangle.get_sides())
-print(triangle.get_square())
+triangle = Triangle((45, 7, 99), 5, 10, 20) # type: ignore
+print(triangle.__dict__)
