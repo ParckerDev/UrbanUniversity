@@ -1,4 +1,8 @@
-def custom_write(file_name: str, strings: list):
+def custom_write(file_name: str, strings: list[str]) -> dict:
+    '''
+    Записывает строки в файл и выводит словарь с номером строки и позицией курсора
+    
+    '''
     with open(file_name, 'w', encoding='utf-8') as file:
         strings_positions = {}
         for index, string in enumerate(strings):
