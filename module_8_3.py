@@ -13,7 +13,8 @@ class Car:
         self.model = model
         if self.__is_valid_vin(vin):
             self.__vin = vin
-        self.__numbers = numbers
+        if self.__is_valid_numbers(numbers):
+            self.__numbers = numbers
 
     def __is_valid_vin(vin_number):
         if not isinstance(vin_number, int):
@@ -31,4 +32,6 @@ class Car:
         else:
             return True
          
+
+# TESTS
 
