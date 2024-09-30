@@ -1,0 +1,4 @@
+class StepValueError(ValueError):
+    pass
+
+
