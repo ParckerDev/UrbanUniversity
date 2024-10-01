@@ -18,7 +18,7 @@ write_words(200, 'example3.txt')
 write_words(100, 'example4.txt')
 end_time = datetime.now()
 result_time = end_time - start_time
-print(result_time)
+print(f'Выполнение функций без потоков выполнено за {result_time}')
 
 start_time = datetime.now()
 thread_1 = Thread(target=write_words, args=(10, 'example5.txt'))
@@ -37,4 +37,4 @@ thread_3.join()
 thread_4.join()
 end_time = datetime.now()
 result_time = end_time - start_time
-print(result_time)
+print(f'Выполнение функций c потоками выполнено за {result_time}')
