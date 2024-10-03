@@ -12,9 +12,11 @@ class Table:
 
 class Guest(Thread):
     def __init__(self, name: str):
+        super().__init__()
         self.name = name
 
     def run(self):
+
         sleep(random.randint(3, 11))
 
 
@@ -29,8 +31,9 @@ class Cafe:
                 for table in filter(lambda table: table.guest == None, self.tables):
                     table.guest = guest
                     guest.start()
+                    guest.join()
                     print(f'{guest.name} сел(-а) за стол номер {table.number}')
-                    continue
+                    break
             else:
                 self.queue.put(guest)
                 print(f'{guest.name} в очереди')
@@ -58,4 +61,4 @@ cafe = Cafe(*tables)
 # Приём гостей
 cafe.guest_arrival(*guests)
 # Обслуживание гостей
-cafe.discuss_guests()
+#cafe.discuss_guests()
