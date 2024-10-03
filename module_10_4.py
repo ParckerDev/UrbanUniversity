@@ -16,8 +16,7 @@ class Guest(Thread):
         self.name = name
 
     def run(self):
-
-        sleep(random.randint(3, 11))
+        sleep(random.randint(3, 15))
 
 
 class Cafe:
@@ -39,9 +38,21 @@ class Cafe:
                 print(f'{guest.name} в очереди')
 
 
-    def discuss_guests(self, ):
-        pass
-
+    def discuss_guests(self):
+        while not self.queue.empty():
+            for table in self.tables:
+                if not table.guest.is_alive(): # type: ignore
+                    print(f'{table.guest.name} покушал(-а) и ушёл(ушла)') # type: ignore
+                    print(f'Стол номер {table.number} свободен')
+                    table.guest = None
+                    if not self.queue.empty():
+                        table.guest = self.queue.get()
+                        print(f'{table.guest.name} вышел(-ла) из очереди и сел(-а) за стол номер {table.number}')
+                        table.guest.start()
+                        table.guest.join()
+                    else:
+                        continue
+                
 
 
 
@@ -61,4 +72,4 @@ cafe = Cafe(*tables)
 # Приём гостей
 cafe.guest_arrival(*guests)
 # Обслуживание гостей
-#cafe.discuss_guests()
+cafe.discuss_guests()
