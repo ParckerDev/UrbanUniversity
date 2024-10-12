@@ -20,16 +20,18 @@ def read_info(file_path):
         for line in file:
             all_data.append(line)
 
-print('Начинаем линейный вызов...')
-start_func = datetime.now()
-for file in file_list:
-    read_info(file)
-end_func = datetime.now()
-print(f'Линейный вызов выполнен за {end_func-start_func}')
 
-print('Начинаем мультипроцессовый вызов...')
-start_func = datetime.now()
-with multiprocessing.Pool(processes=8) as pool:
-    pool.map(read_info, file_list)
-end_func = datetime.now()
-print(f'мультипроцессовый вызов выполнен за {end_func-start_func}')
+if __name__ == '__main__':
+    print('Начинаем линейный вызов...')
+    start_func = datetime.now()
+    for file in file_list:
+        read_info(file)
+    end_func = datetime.now()
+    print(f'Линейный вызов выполнен за {end_func-start_func}')
+
+    print('Начинаем мультипроцессовый вызов...')
+    start_func = datetime.now()
+    with multiprocessing.Pool(processes=8) as pool:
+        pool.map(read_info, file_list)
+    end_func = datetime.now()
+    print(f'мультипроцессовый вызов выполнен за {end_func-start_func}')
