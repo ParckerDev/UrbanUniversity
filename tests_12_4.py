@@ -1,60 +1,45 @@
 import logging
 import unittest
+import runner_2
+
+class RunnerTest(unittest.TestCase):
+    is_frozen = False
+
+    @unittest.skipIf(is_frozen == True, '')
+    def test_walk(self):
+        try:
+            test_people = runner_2.Runner('test_people', -5)
+            for _ in range(10):
+                test_people.walk()
+            self.assertEqual(test_people.distance, 50)
+            logging.info('"test_walk" выполнен успешно')
+        except:
+            logging.warning('Неверная скорость для Runner')
 
 
-class Runner:
-    def __init__(self, name, speed=5):
-        if isinstance(name, str):
-            self.name = name
-        else:
-            raise TypeError(f'Имя может быть только строкой, передано {type(name).__name__}')
-        self.distance = 0
-        if speed > 0:
-            self.speed = speed
-        else:
-            raise ValueError(f'Скорость не может быть отрицательной, сейчас {speed}')
+    @unittest.skipIf(is_frozen == True, '')
+    def test_run(self):
+        try:
+            test_people = runner_2.Runner(54)
+            for _ in range(10):
+                test_people.run()
+            self.assertEqual(test_people.distance, 100)
+            logging.info('"test_run" выполнен успешно')
+        except:
+            logging.warning('Неверный тип данных для объекта Runner')
 
-    def run(self):
-        self.distance += self.speed * 2
-
-    def walk(self):
-        self.distance += self.speed
-
-    def __str__(self):
-        return self.name
-
-    def __repr__(self):
-        return self.name
-
-    def __eq__(self, other):
-        if isinstance(other, str):
-            return self.name == other
-        elif isinstance(other, Runner):
-            return self.name == other.name
+    @unittest.skipIf(is_frozen == True, '')
+    def test_challenge(self):
+        test_people_1 = runner_2.Runner('test_people_1')
+        test_people_2 = runner_2.Runner('test_people_2')
+        for _ in range(10):
+            test_people_1.run()
+            test_people_2.walk()
+        self.assertNotEqual(test_people_1.distance, test_people_2.distance)
 
 
-class Tournament:
-    def __init__(self, distance, *participants):
-        self.full_distance = distance
-        self.participants = list(participants)
 
-    def start(self):
-        finishers = {}
-        place = 1
-        while self.participants:
-            for participant in self.participants:
-                participant.run()
-                if participant.distance >= self.full_distance:
-                    finishers[place] = participant
-                    place += 1
-                    self.participants.remove(participant)
-
-        return finishers
-
-# first = Runner('Вося', 10)
-# second = Runner('Илья', 5)
-# # third = Runner('Арсен', 10)
-#
-# t = Tournament(101, first, second)
-# print(t.start())
-
+if __name__ == '__main__':
+    logging.basicConfig(level=logging.INFO, filemode='w', filename='runner_tests.log', encoding='utf-8',
+                        format='%(asctime)s | %(levelname)s | %(message)s')
+    unittest.main()
