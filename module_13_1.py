@@ -10,6 +10,12 @@ async def start_strongman(name, power):
 
 
 async def start_tournament():
-    task1 = start_strongman('Pasha', 3)
-    task2 = start_strongman('Denis', 4)
-    task3 = start_strongman('Appolon', 5)
+    task1 = asyncio.create_task(start_strongman('Pasha', 3))
+    task2 = asyncio.create_task(start_strongman('Denis', 4))
+    task3 = asyncio.create_task(start_strongman('Appolon', 5))
+    await task1
+    await task2
+    await task3
+
+
+asyncio.run(start_tournament())
