@@ -2,10 +2,8 @@ from aiogram import Bot, Dispatcher, executor, types
 from aiogram.contrib.fsm_storage.memory import MemoryStorage
 from aiogram.dispatcher.filters.state import State, StatesGroup
 from aiogram.dispatcher import FSMContext
-import asyncio
-import key
 
-api = key.API
+api = "key.API"
 bot = Bot(token=api)
 dp = Dispatcher(bot, storage=MemoryStorage())
 
@@ -16,10 +14,6 @@ class UserState(StatesGroup):
     weight = State()
 
 
-@dp.message_handler(commands = ['start'])
-async def start(message):
-    await message.answer('Привет! Я бот помогающий твоему здоровью.')
-
 @dp.message_handler(text='Calories')
 async def set_age(message):
     await message.answer('Введите свой возраст:')
@@ -28,14 +22,12 @@ async def set_age(message):
 @dp.message_handler(state=UserState.age)
 async def set_growth(message, state):
     await state.update_data(age = int(message.text))
-    #data = await state.get_data()
     await message.answer(f'Введите свой рост:')
     await UserState.growth.set()
 
 @dp.message_handler(state=UserState.growth)
 async def set_weight(message, state):
     await state.update_data(growth = int(message.text))
-    #data = await state.get_data()
     await message.answer(f'Введите свой вес:')
     await UserState.weight.set()
 
