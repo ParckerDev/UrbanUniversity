@@ -2,11 +2,19 @@ from aiogram import Bot, Dispatcher, executor, types
 from aiogram.contrib.fsm_storage.memory import MemoryStorage
 from aiogram.dispatcher.filters.state import State, StatesGroup
 from aiogram.dispatcher import FSMContext
-from .bot1.key import API
+from aiogram.types import ReplyKeyboardMarkup, KeyboardButton
 
-api = API
+
+api = 'API'
 bot = Bot(token=api)
 dp = Dispatcher(bot, storage=MemoryStorage())
+
+kb = ReplyKeyboardMarkup(resize_keyboard = True)
+button_calc = KeyboardButton(text = 'Рассчитать')
+button_info = KeyboardButton(text = 'Информация')
+kb.add(button_calc)
+kb.add(button_info)
+
 
 
 class UserState(StatesGroup):
@@ -15,7 +23,11 @@ class UserState(StatesGroup):
     weight = State()
 
 
-@dp.message_handler(text='Calories')
+@dp.message_handler(commands = ['start'])
+async def start(message):
+    await message.answer('Привет! Я бот помогающий твоему здоровью.', reply_markup = kb)
+
+@dp.message_handler(text='Рассчитать')
 async def set_age(message):
     await message.answer('Введите свой возраст:')
     await UserState.age.set()
@@ -39,10 +51,13 @@ async def send_calories(message, state):
     await message.answer(f'Ваша норма калорий = {(10 * data["weight"]) + (6.25 * data["growth"]) - (5 * data["age"] + 5)}')
     await state.finish()
 
+@dp.message_handler(text = 'Информация')
+async def info(message):
+    await message.answer('Привет, я бот для расчёта калорий, которые тебе необхордимы для поддержания своего веса')
 
 @dp.message_handler()
 async def all_message(message):
-    await message.answer('Введите слово Calories, чтобы запустить навык.')
+    await message.answer('Введите команду /start, чтобы начать работать.')
 
 
 if __name__ =='__main__':
