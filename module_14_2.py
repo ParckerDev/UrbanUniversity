@@ -15,7 +15,7 @@ CREATE TABLE IF NOT EXISTS Users(
 
 # Create INDEX with email
 cursor.execute(" CREATE INDEX IF NOT EXISTS idx_email ON Users (email)")
-'''
+
 # Create users
 for i in range(1,11):
     cursor.execute(" INSERT INTO Users (username, email, age, balance) VALUES (?, ?, ?, ?)", (f'User{i}', f'example{i}@gmail.com', f'{i*10}', 1000))
@@ -31,7 +31,7 @@ for i in range(1, len(users) + 1, 3):
 
 # Delete User where id = 6
 cursor.execute(" DELETE FROM Users WHERE id = 6")
-'''
+
 # Total users
 cursor.execute('SELECT COUNT(*) FROM Users')
 total_users = cursor.fetchone()[0]
