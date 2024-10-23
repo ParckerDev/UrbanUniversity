@@ -52,7 +52,8 @@ async def buy_other(call):
 
 @dp.callback_query_handler(text='Back')
 async def back(call):
-    pass
+    await call.message.answer('Что Вас интересует?', reply_markup=keyboards.catalog_kb)
+    await call.answer()
 
 # All another message handler
 @dp.message_handler()
