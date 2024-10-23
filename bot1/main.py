@@ -43,14 +43,26 @@ class UserState(StatesGroup):
     growth = State()
     weight = State()
 
-
+# Start command
 @dp.message_handler(commands = ['start'])
 async def start(message):
     await message.answer('Привет! Я бот помогающий твоему здоровью.', reply_markup = menu_kb)
 
+@dp.message_handler(text='Купить')
+async def get_buying_list(message):
+    for i in range(1, 6):
+        await message.answer(f'Название: Product{i} | Описание: описание {i} | Цена: {i*100}')
+    await message.answer('Выберите продукт для покупки:', reply_markup=kb_inline)
+
 @dp.message_handler(text = 'Рассчитать')
 async def main_menu(message):
     await message.answer('Выберите опцию', reply_markup = kb_inline)
+
+
+@dp.callback_query_handler(text='product_buying')
+async def send_confirm_message(call):
+    await call.message.answer('Вы успешно приобрели продукт!')
+    await call.answer()
 
 @dp.callback_query_handler(text='formulas')
 async def get_formulas(call):
