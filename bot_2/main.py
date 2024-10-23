@@ -18,7 +18,8 @@ async def start(message):
 
 @dp.message_handler(text='О нас')
 async def about(message):
-    await message.answer(texts.about, reply_markup=keyboards.start_kb)
+    with open('bot_2/image/hello.webp', 'rb') as img:
+        await message.answer_photo(img, texts.about, reply_markup=keyboards.start_kb)
 
 @dp.message_handler(text='Стоимость')
 async def info(message):
