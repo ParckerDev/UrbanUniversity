@@ -14,7 +14,7 @@ dp = Dispatcher(bot, storage=MemoryStorage())
 
 @dp.message_handler(commands=['start'])
 async def start(message):
-    await message.answer(f'Добро пожаловать, {message.from_user.username}'+texts.start, reply_markup=keyboards.start_kb)
+    await message.answer(f'Добро пожаловать, {message.from_user.username} ' + texts.start, reply_markup=keyboards.start_kb)
 
 @dp.message_handler(text='О нас')
 async def about(message):
@@ -49,6 +49,10 @@ async def buy_xl(call):
 async def buy_other(call):
     await call.message.answer(texts.other, reply_markup=keyboards.buy_kb)
     await call.answer()
+
+@dp.callback_query_handler(text='Back')
+async def back(call):
+    pass
 
 # All another message handler
 @dp.message_handler()
