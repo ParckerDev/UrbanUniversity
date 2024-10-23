@@ -10,11 +10,17 @@ api = key.API
 bot = Bot(token=api)
 dp = Dispatcher(bot, storage=MemoryStorage())
 
-kb = ReplyKeyboardMarkup(resize_keyboard = True)
-button_calculate = KeyboardButton(text = 'Рассчитать')
-button_info = KeyboardButton(text = 'Информация')
-kb.add(button_calculate)
-kb.add(button_info)
+menu_kb = ReplyKeyboardMarkup(
+    keyboard=[
+        [
+            KeyboardButton(text = 'Рассчитать'),
+            KeyboardButton(text = 'Информация')
+        ],
+        [
+            KeyboardButton(text = 'Купить')
+        ]
+    ], resize_keyboard = True
+    )
 
 kb_inline = InlineKeyboardMarkup()
 button_get_calc = InlineKeyboardButton(text='Рассчитать норму калорий', callback_data='calories')
@@ -31,7 +37,7 @@ class UserState(StatesGroup):
 
 @dp.message_handler(commands = ['start'])
 async def start(message):
-    await message.answer('Привет! Я бот помогающий твоему здоровью.', reply_markup = kb)
+    await message.answer('Привет! Я бот помогающий твоему здоровью.', reply_markup = menu_kb)
 
 @dp.message_handler(text = 'Рассчитать')
 async def main_menu(message):
