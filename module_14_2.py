@@ -32,10 +32,14 @@ for i in range(1, len(users) + 1, 3):
 # Delete User where id = 6
 cursor.execute(" DELETE FROM Users WHERE id = 6")
 '''
-# Count records
+# Total users
 cursor.execute('SELECT COUNT(*) FROM Users')
-count_users = cursor.fetchone()[0]
-print(count_users)
+total_users = cursor.fetchone()[0]
+
+# All_balance
+cursor.execute('SELECT SUM(balance) FROM Users')
+all_balance = cursor.fetchone()[0]
+print(all_balance/total_users)
 
 connection.commit()
 connection.close()
