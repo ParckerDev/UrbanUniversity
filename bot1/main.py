@@ -24,7 +24,7 @@ menu_kb = ReplyKeyboardMarkup(
     )
 
 # Keyboard inline
-kb_inline = InlineKeyboardMarkup(
+kb_prod = InlineKeyboardMarkup(
     inline_keyboard=[
         [InlineKeyboardButton(text='Product1', callback_data='product_buying')],
         [InlineKeyboardButton(text='Product2', callback_data='product_buying')],
@@ -33,8 +33,14 @@ kb_inline = InlineKeyboardMarkup(
         [InlineKeyboardButton(text='Product5', callback_data='product_buying')]
     ]
 )
-button_get_calc = InlineKeyboardButton(text='Рассчитать норму калорий', callback_data='calories')
-button_formula = InlineKeyboardButton(text='Формулы расчёта', callback_data='formulas')
+
+kb_form = InlineKeyboardMarkup(
+    inline_keyboard=[
+        [InlineKeyboardButton(text='Рассчитать норму калорий', callback_data='calories')],
+        [InlineKeyboardButton(text='Формулы расчёта', callback_data='formulas')],
+        [InlineKeyboardButton(text='Назад в меню', callback_data='Back')]
+    ]
+)
 
 
 
@@ -51,12 +57,13 @@ async def start(message):
 @dp.message_handler(text='Купить')
 async def get_buying_list(message):
     for i in range(1, 6):
-        await message.answer(f'Название: Product{i} | Описание: описание {i} | Цена: {i*100}')
-    await message.answer('Выберите продукт для покупки:', reply_markup=kb_inline)
+        with open(f'bot1/images/{i}.webp', 'rb') as photo:
+            await message.answer_photo(photo, f'Название: Product{i} | Описание: описание {i} | Цена: {i*100}')
+    await message.answer('Выберите продукт для покупки:', reply_markup=kb_prod)
 
 @dp.message_handler(text = 'Рассчитать')
 async def main_menu(message):
-    await message.answer('Выберите опцию', reply_markup = kb_inline)
+    await message.answer('Выберите опцию', reply_markup = kb_form)
 
 
 @dp.callback_query_handler(text='product_buying')
@@ -73,6 +80,11 @@ async def get_formulas(call):
 async def set_age(call):
     await call.message.answer('Введите свой возраст:')
     await UserState.age.set()
+
+@dp.callback_query_handler(text='Back')
+async def back(call):
+    await call.message.answer('Выбери пункт меню:', reply_markup = menu_kb)
+    await call.answer()
 
 @dp.message_handler(state=UserState.age)
 async def set_growth(message, state):
@@ -95,7 +107,8 @@ async def send_calories(message, state):
 
 @dp.message_handler(text = 'Информация')
 async def info(message):
-    await message.answer('Привет, я бот для расчёта калорий, которые тебе необходимы для поддержания своего веса')
+    with open('bot1/images/about.webp', 'rb') as photo:
+        await message.answer_photo(photo, 'Привет, я бот для продажи витаминов и расчёта калорий, которые тебе необходимы для снижения веса')
 
 @dp.message_handler()
 async def all_message(message):
