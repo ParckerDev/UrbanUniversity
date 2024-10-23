@@ -10,6 +10,7 @@ api = key.API
 bot = Bot(token=api)
 dp = Dispatcher(bot, storage=MemoryStorage())
 
+# Keyboard main menu
 menu_kb = ReplyKeyboardMarkup(
     keyboard=[
         [
@@ -22,11 +23,19 @@ menu_kb = ReplyKeyboardMarkup(
     ], resize_keyboard = True
     )
 
-kb_inline = InlineKeyboardMarkup()
+# Keyboard inline
+kb_inline = InlineKeyboardMarkup(
+    inline_keyboard=[
+        [InlineKeyboardButton(text='Product1', callback_data='product_buying')],
+        [InlineKeyboardButton(text='Product2', callback_data='product_buying')],
+        [InlineKeyboardButton(text='Product3', callback_data='product_buying')],
+        [InlineKeyboardButton(text='Product4', callback_data='product_buying')],
+        [InlineKeyboardButton(text='Product5', callback_data='product_buying')]
+    ]
+)
 button_get_calc = InlineKeyboardButton(text='Рассчитать норму калорий', callback_data='calories')
 button_formula = InlineKeyboardButton(text='Формулы расчёта', callback_data='formulas')
-kb_inline.add(button_get_calc)
-kb_inline.add(button_formula)
+
 
 
 class UserState(StatesGroup):
