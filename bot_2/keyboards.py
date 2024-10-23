@@ -27,3 +27,15 @@ buy_kb = InlineKeyboardMarkup(
         [InlineKeyboardButton('Назад в каталог', callback_data='Back')]
     ]
 )
+
+# ADMIN KB
+admin_kb = InlineKeyboardMarkup(
+    inline_keyboard=[
+        [InlineKeyboardButton(text='Пользователи', callback_data='users')],
+        [InlineKeyboardButton(text='Статистика', callback_data='stat')],
+        [
+            InlineKeyboardButton(text='Заблокировать', callback_data='block'),
+            InlineKeyboardButton(text='Разблокировать', callback_data='unblock')
+        ]
+    ]
+)
