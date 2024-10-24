@@ -1,19 +1,25 @@
 from typing import Annotated
 from fastapi import FastAPI, Path
+from pydantic import BaseModel
 import uvicorn
 
-users = {'1': 'Имя: Example, возраст: 18'}
+users = []
 app = FastAPI()
+
+class User(BaseModel):
+    id: int
+    username: str
+    age: int
+
 
 @app.get('/users')
 async def get_users():
     return users
 
 @app.post('/user/{username}/{age}')
-async def add_user(username: Annotated[str, Path(min_length=5, max_length=20, description='Enter username', example='UrbanUser')],
-                   age: Annotated[int, Path(ge=18, le=120, description='Enter age', example='24')]):
-    current_id = int(max(users.keys(), key=int)) + 1
-    users[current_id] = f'Имя: {username}, возраст: {age}'
+async def add_user(user: User):
+    current_id = 1 if not users else users[-1].id + 1
+    users.append({'id': current_id, 'username': user.username, 'age': user.age})
     return f'User {current_id} is registered'
 
 @app.put('/user/{user_id}/{username}/{age}')
