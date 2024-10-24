@@ -1,17 +1,22 @@
 import logging
+import sqlite3
 from aiogram import Bot, Dispatcher, executor, types
 from aiogram.contrib.fsm_storage.memory import MemoryStorage
 from aiogram.dispatcher.filters.state import State, StatesGroup
 from aiogram.dispatcher import FSMContext
 from aiogram.types import ReplyKeyboardMarkup, KeyboardButton, InlineKeyboardButton, InlineKeyboardMarkup
 
-import key
+import key, crud_functions
 
 api = key.API
 
+# Enable logging
 logging.basicConfig(level=logging.INFO)
+
 bot = Bot(token=api)
 dp = Dispatcher(bot, storage=MemoryStorage())
+
+
 
 # Keyboard main menu
 menu_kb = ReplyKeyboardMarkup(
@@ -119,4 +124,5 @@ async def all_message(message):
 
 
 if __name__ =='__main__':
+    crud_functions.initiate_db()
     executor.start_polling(dp, skip_updates=True)
