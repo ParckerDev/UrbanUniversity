@@ -6,9 +6,9 @@ from aiogram.dispatcher.filters.state import State, StatesGroup
 from aiogram.dispatcher import FSMContext
 from aiogram.types import ReplyKeyboardMarkup, KeyboardButton, InlineKeyboardButton, InlineKeyboardMarkup
 
-import key, crud_functions
+import crud_functions
 
-api = key.API
+api = "api"
 
 # Enable logging
 logging.basicConfig(level=logging.INFO)
@@ -125,5 +125,4 @@ async def all_message(message):
 
 
 if __name__ =='__main__':
-    
     executor.start_polling(dp, skip_updates=True)
