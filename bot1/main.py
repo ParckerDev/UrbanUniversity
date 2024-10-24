@@ -15,6 +15,7 @@ logging.basicConfig(level=logging.INFO)
 
 bot = Bot(token=api)
 dp = Dispatcher(bot, storage=MemoryStorage())
+crud_functions.initiate_db()
 
 
 
@@ -124,5 +125,5 @@ async def all_message(message):
 
 
 if __name__ =='__main__':
-    crud_functions.initiate_db()
+    
     executor.start_polling(dp, skip_updates=True)
