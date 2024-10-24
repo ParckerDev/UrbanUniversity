@@ -14,7 +14,21 @@ def initiate_db(cursor=cursor):
             price INTEGER NOT NULL
             )
     ''')
+
+    cursor.execute('''
+        CREATE TABLE IF NOT EXISTS Users(
+                   id INTEGER PRIMARY KEY,
+                   username TEXT NT NULL,
+                   email TEXT NOT NULL,
+                   age INTEGER NOT NULL,
+                   balance INTEGER NOT NULL
+                   )
+        ''')
+
     connect.commit()
+
+def add_user(username, email, age):
+    cursor.execute(f"INSERT INTO Users (username, email, age, balance) VALUES ({username}, {email}, {age}, 1000)")
 
 def get_all_products(cursor=cursor):
     cursor.execute('''
