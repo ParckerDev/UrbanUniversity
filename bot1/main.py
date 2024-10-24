@@ -156,8 +156,10 @@ async def set_email(message, state):
 async def set_age(message, state):
     await state.update_data(age=message.text)
     user = await state.get_data()
-    crud_functions.add_user(user['username'], user['email'], user['age'])
+    await crud_functions.add_user(user['username'], user['email'], user['age'])
     await state.finish()
+    await message.answer('Вы успешно зарегистрировались')
+
 
 
 

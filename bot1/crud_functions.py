@@ -28,11 +28,11 @@ def initiate_db(cursor=cursor):
     connect.commit()
 
 def add_user(username, email, age):
-    cursor.execute(f"INSERT INTO Users (username, email, age, balance) VALUES ({username}, {email}, {age}, 1000)")
+    cursor.execute(f"INSERT INTO Users (username, email, age, balance) VALUES (?, ?, ?, ?)", (username, email, age, 1000))
     connect.commit()
 
 def is_included(username):
-    return True if cursor.execute(f"SELECT COUNT(*) FROM Users WHERE username = {username}").fetchone()[0] > 0 else False
+    return cursor.execute(f"SELECT COUNT(*) FROM Users WHERE username = ?", (f'{username}',)).fetchone()[0] > 0
 
 
 def get_all_products(cursor=cursor):
