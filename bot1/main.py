@@ -1,4 +1,5 @@
 import logging
+from re import A
 import sqlite3
 from aiogram import Bot, Dispatcher, executor, types
 from aiogram.contrib.fsm_storage.memory import MemoryStorage
@@ -27,7 +28,8 @@ menu_kb = ReplyKeyboardMarkup(
             KeyboardButton(text = 'Информация')
         ],
         [
-            KeyboardButton(text = 'Купить')
+            KeyboardButton(text = 'Купить'),
+            KeyboardButton(text = 'Регистрация')
         ]
     ], resize_keyboard = True
     )
@@ -57,6 +59,13 @@ class UserState(StatesGroup):
     age = State()
     growth = State()
     weight = State()
+
+
+class RegistrationState(StatesGroup):
+    username = State()
+    email = State()
+    age = State()
+    balance = 1000
 
 # Start command
 @dp.message_handler(commands = ['start'])
@@ -119,6 +128,41 @@ async def info(message):
     with open('bot1/images/about.webp', 'rb') as photo:
         await message.answer_photo(photo, 'Привет, я бот для продажи витаминов и расчёта калорий, которые тебе необходимы для снижения веса')
 
+
+
+# REGISTRATION BLOCK
+@dp.message_handler(text='Регистрация')
+async def sign_up(message):
+    await message.answer('Введите имя пользователя (только латинский алфавит)')
+    await RegistrationState.username.set()
+
+@dp.message_handler(state=RegistrationState.username)
+async def set_username(message, state):
+    if not crud_functions.is_included(message.text):
+        await state.update_data(username=message.text)
+        await message.answer('Введите свой email:')
+        await RegistrationState.email.set()
+    else:
+        await message.answer(f'Имя пользователя {message.text} уже есть в базе.\nВведите новое имя пользователя:')
+        await RegistrationState.username.set()
+
+@dp.message_handler(state=RegistrationState.email)
+async def set_email(message, state):
+    await state.update_data(email=message.text)
+    await message.answer('Введите свой возраст:')
+    await RegistrationState.age.set()
+
+@dp.message_handler(state=RegistrationState.age)
+async def set_age(message, state):
+    await state.update_data(age=message.text)
+    user = await state.get_data()
+    crud_functions.add_user(user['username'], user['email'], user['age'])
+    await state.finish()
+
+
+
+
+# ALL MESSAGE
 @dp.message_handler()
 async def all_message(message):
     await message.answer('Введите команду /start, чтобы начать работать.')
