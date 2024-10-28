@@ -1,5 +1,5 @@
 from typing import Annotated
-from fastapi import FastAPI, Path
+from fastapi import FastAPI, HTTPException, Path
 from pydantic import BaseModel
 import uvicorn
 
@@ -20,14 +20,17 @@ async def get_users():
 async def add_user(user: User):
     current_id = 1 if not users else users[-1].id + 1
     users.append({'id': current_id, 'username': user.username, 'age': user.age})
-    return f'User {current_id} is registered'
+    return {'id': current_id, 'username': user.username, 'age': user.age}
 
 @app.put('/user/{user_id}/{username}/{age}')
 async def update_user(user_id: Annotated[int, Path(ge=1, le=100, description='Enter User ID', example='34')],
                       username: Annotated[str, Path(min_length=5, max_length=20, description='Enter username', example='UrbanUser')],
                       age: Annotated[int, Path(ge=18, le=120, description='Enter age', example='24')]):
-    users[user_id] = f'Имя: {username}, возраст: {age}'
-    return f'The user {user_id} is update'
+    try:
+        users[user_id] = {'id': current_id, 'username': user.username, 'age': user.age}
+        return f'The user {user_id} is update'
+    except IndexError:
+        raise HTTPException(status_code=404, detail='User not found')
 
 @app.delete('/user/{user_id}')
 async def delete_user(user_id: Annotated[int, Path(ge=1, le=100, description='Enter User ID', example='34')]):
@@ -37,4 +40,4 @@ async def delete_user(user_id: Annotated[int, Path(ge=1, le=100, description='En
 
 
 if __name__ == "__main__":
-    uvicorn.run("module_16_3:app", reload=True)
+    uvicorn.run("module_16_4:app", reload=True)
