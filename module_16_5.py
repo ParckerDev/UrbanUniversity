@@ -15,11 +15,14 @@ class User(BaseModel):
     age: int
 
 
+@app.get('/')
+async def get_main_page(request: Request) -> HTMLResponse:
+    return templates.TemplateResponse('users.html', {'request': request, 'users': users})
 
-
-@app.get('/users')
-async def get_users():
-    return users
+@app.get('/user/{user_id}')
+async def get_user(request: Request, user_id):
+    user = list(filter(lambda user: user.id == user_id, users))[0]
+    return templates.TemplateResponse('users.html', {'request': request, 'user': user})
 
 @app.post('/user/{username}/{age}')
 async def add_user(user: User):

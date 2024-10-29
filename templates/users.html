@@ -13,7 +13,7 @@
                     <ul class="list-group list-group-flush">
                         <!-- Напишите свой код здесь (перебор пользователей) -->
                          {% for user in users %}
-                         <li class="list-group-item"></li>
+                         <li class="list-group-item">{{user.id}} - {{user.username}}</li>
 
                          {% endfor %}
                     </ul>
