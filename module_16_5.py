@@ -1,8 +1,11 @@
 from typing import Annotated
-from fastapi import FastAPI, HTTPException, Path
+from fastapi import FastAPI, HTTPException, Path, Request
+from fastapi.responses import HTMLResponse
+from fastapi.templating import Jinja2Templates
 from pydantic import BaseModel
 import uvicorn
 
+templates = Jinja2Templates('templates/')
 users = []
 app = FastAPI()
 
@@ -10,6 +13,8 @@ class User(BaseModel):
     id: int
     username: str
     age: int
+
+
 
 
 @app.get('/users')

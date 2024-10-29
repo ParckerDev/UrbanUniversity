@@ -4,6 +4,7 @@
         <article class="card container fluid"></article>
         <br>
         <!-- Напишите свой код здесь (Вывод свойств объекта User) -->
+
     {% else %}
             <section class="container-fluid">
                 <h2 align="center"> Users </h2>
@@ -11,6 +12,10 @@
                 <div class="card">
                     <ul class="list-group list-group-flush">
                         <!-- Напишите свой код здесь (перебор пользователей) -->
+                         {% for user in users %}
+                         <li class="list-group-item"></li>
+
+                         {% endfor %}
                     </ul>
                 </div>
             </section>
