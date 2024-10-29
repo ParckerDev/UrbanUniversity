@@ -20,9 +20,11 @@ async def get_main_page(request: Request) -> HTMLResponse:
     return templates.TemplateResponse('users.html', {'request': request, 'users': users})
 
 @app.get('/user/{user_id}')
-async def get_user(request: Request, user_id):
+async def get_user(request: Request, user_id: int) -> HTMLResponse:
     user = list(filter(lambda user: user.id == user_id, users))[0]
+    print(user.id)
     return templates.TemplateResponse('users.html', {'request': request, 'user': user})
+    #return user
 
 @app.post('/user/{username}/{age}')
 async def add_user(user: User):
