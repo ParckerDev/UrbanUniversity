@@ -6,7 +6,7 @@ from sqlalchemy.orm import relationship
 
 class Task(Base):
     __tablename__ = 'tasks'
-    __table_args__ = {'keep_existing': True}
+    __table_args__ = {'extend_existing': True}
     id = Column(Integer, primary_key=True, index=True)#- целое число, первичный ключ, с индексом.
     title = Column(String) #- строка.
     content = Column(String) #- строка.

@@ -6,6 +6,7 @@ from sqlalchemy.orm import relationship
 
 class User(Base):
     __tablename__ = 'users'
+    __table_args__ = {'keep_existing': True}
     id = Column(Integer, primary_key=True, index=True) # - целое число, первичный ключ, с индексом.
     username = Column(String) # - строка.
     firstname = Column(String) #- строка.
