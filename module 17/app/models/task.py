@@ -19,4 +19,4 @@ class Task(Base):
 
 
 from sqlalchemy.schema import CreateTable
-print(CreateTable(User.__table__)) # type: ignore
+print(CreateTable(Task.__table__)) # type: ignore
