@@ -4,9 +4,6 @@ from sqlalchemy import Column, Integer, String, ForeignKey, Boolean
 from sqlalchemy.orm import relationship, DeclarativeBase
 
 
-class Base(DeclarativeBase):
-    pass
-
 class Task(Base):
     __tablename__ = 'tasks'
     __table_args__ = {'extend_existing': True}

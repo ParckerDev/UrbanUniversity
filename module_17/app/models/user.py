@@ -1,10 +1,6 @@
 from models import Base, Task
-from sqlalchemy import Column, Integer, String, ForeignKey, Boolean
+from sqlalchemy import Column, Integer, String
 from sqlalchemy.orm import relationship, DeclarativeBase
-
-
-class Base(DeclarativeBase):
-    pass
 
 
 class User(Base):
