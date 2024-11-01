@@ -1,8 +1,10 @@
-from models import Base
-import user
+from app.models import *
 from sqlalchemy import Column, Integer, String, ForeignKey, Boolean
-from sqlalchemy.orm import relationship
+from sqlalchemy.orm import relationship, DeclarativeBase
 
+
+class Base(DeclarativeBase):
+    pass
 
 class Task(Base):
     __tablename__ = 'tasks'
@@ -15,3 +17,8 @@ class Task(Base):
     user_id = Column(Integer, ForeignKey('users.id'), nullable=False, index=True) #- целое число, внешний ключ на id из таблицы 'users', не NULL, с индексом.
     slug = Column(String, unique=True, index=True) # - строка, уникальная, с индексом.
     user = relationship('User', back_populates='tasks') # - объект связи с таблицей с таблицей User, где back_populates='task
+
+
+
+from sqlalchemy.schema import CreateTable
+print(CreateTable(Task.__table__)) # type: ignore

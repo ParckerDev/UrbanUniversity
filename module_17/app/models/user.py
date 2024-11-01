@@ -1,10 +1,10 @@
-from app.backend.db import Base
-
-
 import task
 from sqlalchemy import Column, Integer, String, ForeignKey, Boolean
-from sqlalchemy.orm import relationship
+from sqlalchemy.orm import relationship, DeclarativeBase
 
+
+class Base(DeclarativeBase):
+    pass
 
 
 class User(Base):
