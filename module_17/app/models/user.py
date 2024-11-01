@@ -1,4 +1,4 @@
-import task
+from models import Base, Task
 from sqlalchemy import Column, Integer, String, ForeignKey, Boolean
 from sqlalchemy.orm import relationship, DeclarativeBase
 
@@ -9,6 +9,7 @@ class Base(DeclarativeBase):
 
 class User(Base):
     __tablename__ = 'users'
+    __table_args__ = {'keep_existing': True}
     id = Column(Integer, primary_key=True, index=True) # - целое число, первичный ключ, с индексом.
     username = Column(String) # - строка.
     firstname = Column(String) #- строка.
@@ -20,4 +21,4 @@ class User(Base):
 
 
 from sqlalchemy.schema import CreateTable
-print(CreateTable(User.__table__))
+print(CreateTable(User.__table__)) # type: ignore
