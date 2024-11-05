@@ -5,13 +5,15 @@ from routers import task, user
 
 
 app = FastAPI()
-app.include_router(task.router)
-app.include_router(user.router)
 
 
-@app.get('/')
+
+@app.get('/', tags=['Welcome'])
 async def get_main_page():
     return {'message': 'Welcom to TaskManager'}
+
+app.include_router(task.router)
+app.include_router(user.router)
 
 
 
